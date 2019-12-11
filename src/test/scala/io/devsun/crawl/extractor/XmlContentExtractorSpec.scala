@@ -1,4 +1,4 @@
-package io.devsun.crawler
+package io.devsun.crawl.extractor
 
 import org.scalatest.WordSpec
 
@@ -20,12 +20,4 @@ class XmlContentExtractorSpec extends WordSpec {
   }
 }
 
-object XmlContentExtractor extends ContentExtractor {
-  import scala.xml._
 
-  override def extract(responseBody: String, path: String): Seq[String] = {
-    val xml = XML.loadString(responseBody)
-    val nodeSeq = xml \\ path
-    nodeSeq.theSeq.map(node => node.toString()).toSeq
-  }
-}

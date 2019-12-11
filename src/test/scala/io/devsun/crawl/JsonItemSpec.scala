@@ -1,8 +1,7 @@
-package io.devsun.crawler
+package io.devsun.crawl
 
-import io.devsun.crawl.JsonItem
+import io.devsun.crawl.JsonItemSpec._
 import org.scalatest.WordSpec
-import JsonItemSpec._
 class JsonItemSpec extends WordSpec {
   "JsonItem" should {
     "return value by json path" in {
