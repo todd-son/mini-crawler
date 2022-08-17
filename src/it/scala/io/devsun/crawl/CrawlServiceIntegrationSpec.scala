@@ -1,10 +1,11 @@
 package io.devsun.crawl
 
+import io.devsun.crawl.extractor.XmlContentExtractor
 import org.scalatest.WordSpec
 import org.slf4j.LoggerFactory
 
 class CrawlServiceIntegrationSpec extends WordSpec {
-  private val crawlService = new CrawlService(HttpCrawler.apply(), "item")
+  private val crawlService = new CrawlService(HttpCrawler(XmlContentExtractor), "item")
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   "CrawlService" should {
@@ -15,5 +16,4 @@ class CrawlServiceIntegrationSpec extends WordSpec {
       logger.debug("{}", items)
     }
   }
-
 }

@@ -1,16 +1,18 @@
 package io.devsun.crawl
 
-import io.devsun.crawl.extractor.XmlContentExtractor
-import org.json.XML
+import io.devsun.crawl.extractor.{ContentExtractor, HtmlContentExtractor}
 
-case class HttpCrawler() extends Crawler {
+case class HttpCrawler(contentExtractor: ContentExtractor) extends Crawler {
   import sttp.client.quick._
 
   override def crawl(url: String, fragmentPath: String): List[Item] = {
     val response = quickRequest.get(uri"""$url""").send()
 
-    val contents = XmlContentExtractor.extract(response.body, fragmentPath)
+    val payload = contentExtractor.extract(response.body, fragmentPath)
 
-    contents.map(xml => JsonItem(XML.toJSONObject(xml).toString(2)))
+    contentExtractor match {
+      case _: HtmlContentExtractor =>
+        payload.map(item => HtmlItem(item)).toList
+    }
   }
 }
